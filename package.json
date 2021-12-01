@@ -1,0 +1,27 @@
+{
+  "name": "proyecto",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Proyecto de Desarrollo de Aplicaciones Web",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --watch backend --exec node --experimental-modules backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuisCrisantos/Proyecto.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LuisCrisantos/Proyecto/issues"
+  },
+  "homepage": "https://github.com/LuisCrisantos/Proyecto#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.3.0",
+    "eslint-plugin-react": "^7.27.1"
+  }
+}
