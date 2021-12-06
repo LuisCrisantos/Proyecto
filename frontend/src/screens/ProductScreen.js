@@ -50,7 +50,7 @@ export default function ProductScreen(props) {
                                 <li>Precio: ${product.price}</li>
                                 <li>
                                     Descripción:
-                                    <p>{product.descirption}</p>
+                                    <p>{product.description}</p>
                                 </li>
                             </ul>
                         </div>
