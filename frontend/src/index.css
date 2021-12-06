@@ -167,6 +167,9 @@ img.large{
   color: #404040;
 }
 /*Alert*/
+.loading{
+  display: block !important;
+}
 .success{
   color: #20a020;
 }
@@ -219,4 +222,16 @@ img.large{
 }
 .dropdown:hover .dropdown-content{
   display: block;
+}
+/*Checkout steps*/
+.checkout-steps>div{
+  border-top: 0.3rem #c0c0c0 solid;
+  color: #c0c0c0;
+  flex: 1;
+  padding: 1rem;
+  font-weight: bold;
+}
+.checkout-steps>div.active{
+  border-top-color: #F08000;
+  color: #F08000;
 }
