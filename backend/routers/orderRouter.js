@@ -14,7 +14,7 @@ orderRouter.post(
         }else{
             const order = new Order({
                 orderItems: req.body.orderItems,
-                shippingItems: req.body.shippingItems,
+                shippingAddress: req.body.shippingAddress,
                 paymentMethod: req.body.paymentMethod,
                 itemsPrice: req.body.itemsPrice,
                 shippingPrice: req.body.shippingPrice,
@@ -24,6 +24,17 @@ orderRouter.post(
             });
             const createdOrder = await order.save();
             res.status(201).send({message: "Nueva orden creada", order: createdOrder});
+        }
+    })
+);
+
+orderRouter.get(
+    '/:id', isAuth, expressAsyncHandler(async(req,res) =>{
+        const order = await Order.findById(req.params.id);
+        if(order){
+            res.send(order);
+        }else{
+            res.status(404).send({message: "Orden no encontrada"});
         }
     })
 );
