@@ -35,6 +35,8 @@ footer{
   grid-area: footer;
   background-color: #203040;
   color: #FFFFFF;
+  display: inline-block;
+  margin-top: 2%;
 }
 
 /*Common*/

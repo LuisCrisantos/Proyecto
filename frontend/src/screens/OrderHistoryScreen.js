@@ -22,7 +22,7 @@ export default function OrderHistoryScreen(props) {
                      <thead>
                          <tr>
                             <th>ID</th>
-                            <th>DATE</th>
+                            <th>FECHA</th>
                             <th>TOTAL</th>
                             <th>PAGADO</th>
                             <th>ENVIADO</th>
