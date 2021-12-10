@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {detailsProduct} from '../actions/productActions.js';
+import Axios from 'axios';
+import {detailsProduct, updateProduct} from '../actions/productActions.js';
 import LoadingBox from '../components/LoadingBox.js';
 import MessageBox from '../components/MessageBox.js';
+import { PRODUCT_UPDATE_RESET } from '../constants/productConstants.js';
 
 export default function ProductEditScreen(props) {
     const productId = props.match.params.id;
@@ -15,9 +17,17 @@ export default function ProductEditScreen(props) {
 
     const productDetails = useSelector(state => state.productDetails);
     const {loading, error, product} = productDetails;
+
+    const productUpdate = useSelector((state) => state.productUpdate);
+    const {loading: loadingUpdate, error: errorUpdate, success: successUpdate} = productUpdate;
+
     const dispatch = useDispatch();
     useEffect(() => {
-        if(!product || product._id !== productId){
+        if (successUpdate){ 
+            props.history.push('/productlist');
+        }
+        if(!product || product._id !== productId || successUpdate){
+            dispatch({type: PRODUCT_UPDATE_RESET});
             dispatch(detailsProduct(productId));
         }else{
             setName(product.name);
@@ -27,16 +37,51 @@ export default function ProductEditScreen(props) {
             setCountInStock(product.countInStock);
             setDescription(product.description);
         }
-    }, [product, dispatch, productId]);
+    }, [product, dispatch, productId,props.history,successUpdate]);
     const submitHandler = (e) => {
         e.preventDefault();
+        dispatch(
+            updateProduct({
+                _id: productId, name, price, image, category, countInStock, description,
+            })
+        );
+    };
+
+    const [loadingUpload, setLoadingUpload] = useState(false);
+    const [errorUpload, setErrorUpload] = useState('');
+
+    const userSignin = useSelector((state) => state.userSignin);
+    const {userInfo} = userSignin;
+    const uploadFileHandler = async (e) => {
+        const file = e.target.files[0];
+        const bodyFormData = new FormData();
+        bodyFormData.append('image', file);
+        setLoadingUpload(true);
+        try{
+            const {data} = await Axios.post('/api/uploads', bodyFormData, {
+                headers:{
+                    'Content-Type':'multipart/form-data',
+                    Authorization: `Bearer ${userInfo.token}`,
+                },
+            });
+            setImage(data);
+            setLoadingUpload(false);
+        }catch(error){
+            setErrorUpload(error.message);
+            setLoadingUpload(false);
+        }
     }
+
     return (
         <div>
             <form className="form" onSubmit={submitHandler}>
                 <div>
                     <h1>Editar producto</h1>
                 </div>
+
+                {loadingUpdate && <LoadingBox></LoadingBox> }
+                {errorUpdate && <MessageBox variant="danger">{errorUpdate}</MessageBox>}
+
                 {loading? (<LoadingBox></LoadingBox> )
                 :
                 error? (<MessageBox variant="danger">{error}</MessageBox>)
@@ -51,9 +96,17 @@ export default function ProductEditScreen(props) {
                         <input id="price" type="text" placeholder="Ingresar precio" value={price} onChange={(e) => setPrice(e.target.value)}></input>
                     </div>
                     <div>
-                        <label htmlFor="imagen">Imagen</label>
-                        <input id="imagen" type="text" placeholder="Ingresar imagen" value={image} onChange={(e) => setImage(e.target.value)}></input>
+                        <label htmlFor="image">Imagen</label>
+                        <input id="image" type="text" placeholder="Ingresar imagen" value={image} onChange={(e) => setImage(e.target.value)}></input>
                     </div>
+
+                    <div>
+                        <label htmlFor="imageFile">Archivo de imagen</label>
+                        <input type="file" id="imageFile" label="Subir imagen" onChange={uploadFileHandler}></input>
+                        {loadingUpload && <LoadingBox></LoadingBox>}
+                        {errorUpload && <MessageBox variant="danger">{errorUpload}</MessageBox>}
+                    </div>
+
                     <div>
                         <label htmlFor="category">Categoría</label>
                         <input id="category" type="text" placeholder="Ingresar categoria" value={category} onChange={(e) => setCategory(e.target.value)}></input>

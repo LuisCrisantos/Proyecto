@@ -18,7 +18,7 @@ const data={
     products: [
         {
             name: 'Genki I Textbook 3rd Edition',
-            category: 'Study',
+            category: 'Estudio',
             image: '/images/P1.jpg',
             price: 1050,
             countInStock: 6,
@@ -28,7 +28,7 @@ const data={
         },
         {
             name: 'Genki II Textbook 3rd Edition',
-            category: 'Study',
+            category: 'Estudio',
             image: '/images/P2.jpg',
             price: 1050,
             countInStock: 8,
@@ -38,7 +38,7 @@ const data={
         },
         {
             name: 'Genki I Workbook 3rd Edition',
-            category: 'Study',
+            category: 'Estudio',
             image: '/images/P3.jpg',
             price: 760,
             countInStock: 10,
@@ -48,7 +48,7 @@ const data={
         },
         {
             name: 'Genki II Workbook 3rd Edition',
-            category: 'Study',
+            category: 'Estudio',
             image: '/images/P4.jpg',
             price: 760,
             countInStock: 13,
@@ -58,7 +58,7 @@ const data={
         },
         {
             name: 'Basic Kanji Book I',
-            category: 'Study',
+            category: 'Estudio',
             image: '/images/P5.jpg',
             price: 1150,
             countInStock: 4,
@@ -68,7 +68,7 @@ const data={
         },
         {
             name: 'Basic Kanji Book II',
-            category: 'Study',
+            category: 'Estudio',
             image: '/images/P6.jpg',
             price: 1150,
             countInStock: 7,
